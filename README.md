@@ -1,10 +1,12 @@
-#Pinpoint 学习笔记!
+
+# Pinpoint 学习笔记!
+
 
 > Pinpoint github 官网对其描述
 > Pinpoint is an open source APM (Application Performance Management) tool for large-scale distributed systems written in Java. (一款开源的 应用性能管理工具  为大规模的分布式系统定制 )
 
 ==========================================================================
-####本文将从这 5 个方面理解 Pinpoint 的实现机制
+#### 本文将从这 5 个方面理解 Pinpoint 的实现机制
  
  1. JVMTI 、 JVMTIAgent  与 JAVAAGENT 机制
  2. Pinpoint ClassLoader
@@ -55,7 +57,8 @@ Agent_OnAttach函数，如果agent不是在启动的时候加载的，是我们�
 Agent_OnUnload函数，在agent做卸载的时候调用，不过貌似基本上很少实现它。
 
 -----
-**JAVAAGENT **
+
+**JAVAAGENT**
 
 javaagent
 
