@@ -51,7 +51,7 @@ public class AsmInstrumentClass implements InstrumentionClass{
                         processTargetConstructor(targetConstructor,index);
                     }
                     if(targetMethod != null){
-                        processTargetMethods(targetConstructor,index);
+                        processTargetMethods(targetMethod,index);
                     }
                 }
             } catch (InstantiationException e) {
@@ -64,12 +64,12 @@ public class AsmInstrumentClass implements InstrumentionClass{
         }
     }
 
-    private void processTargetMethods(TargetConstructor targetConstructor, int index) {
-
+    private void processTargetMethods(TargetMethod targetConstructor, int index) {
+        System.out.println(targetConstructor.name() + "," + index);
     }
 
     private void processTargetConstructor(TargetConstructor targetConstructor, int index) {
-
+        System.out.println(targetConstructor.value()[0] + "," + index);
     }
 
     public byte[] toByte() {
