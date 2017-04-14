@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="tools">
+    <CLASSES>
+      <root url="jar://E:/Java/jdk1.8.0_73/jre/../lib/tools.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://E:/Java/jdk1.8.0_73/jre/../lib/tools.jar!/" />
+    </SOURCES>
+  </library>
+</component>

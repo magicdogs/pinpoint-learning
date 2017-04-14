@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/agentbootstrap/agentbootstrap.iml" filepath="$PROJECT_DIR$/agentbootstrap/agentbootstrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinpoint-demo.iml" filepath="$PROJECT_DIR$/pinpoint-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugindemo/plugindemo.iml" filepath="$PROJECT_DIR$/plugindemo/plugindemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pluginsloader/pluginsloader.iml" filepath="$PROJECT_DIR$/pluginsloader/pluginsloader.iml" />
+    </modules>
+  </component>
+</project>

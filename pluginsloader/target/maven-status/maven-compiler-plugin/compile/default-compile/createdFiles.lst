@@ -1,0 +1,15 @@
+com\magic\AgentOperation$1.class
+com\magic\interceptor\AroundInterceptor.class
+com\magic\transfrom\TransfromOpearation.class
+com\magic\AgentOperation.class
+com\magic\instrumentation\InstrumentionClass.class
+com\magic\transfrom\TransfromTemplateImpl.class
+com\magic\transfrom\ClassTransfromer.class
+com\magic\util\TargetMethod.class
+com\magic\interceptor\InterceptorRegister.class
+com\magic\transfrom\TransfromTemplate.class
+com\magic\util\TargetConstructor.class
+com\magic\spi\Plugins.class
+com\magic\instrumentation\AsmInstrumention.class
+com\magic\instrumentation\AsmInstrumentClass.class
+com\magic\instrumentation\Instrumentor.class

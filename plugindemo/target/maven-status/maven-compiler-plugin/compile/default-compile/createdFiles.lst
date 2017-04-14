@@ -1,0 +1,4 @@
+com\plugin\demo\Example1ConstructorInterceptor.class
+com\plugin\demo\Example1MethodInterceptor.class
+com\plugin\demo\PluginDemo$1.class
+com\plugin\demo\PluginDemo.class

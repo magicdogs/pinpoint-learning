@@ -1,0 +1,14 @@
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\InstrumentionClass.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\TransfromTemplateImpl.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\interceptor\AroundInterceptor.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\spi\Plugins.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\AgentOperation.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\util\TargetMethod.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\AsmInstrumention.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\TransfromOpearation.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\util\TargetConstructor.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\interceptor\InterceptorRegister.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\ClassTransfromer.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\TransfromTemplate.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\AsmInstrumentClass.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\Instrumentor.java

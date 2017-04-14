@@ -1,0 +1,7 @@
+com\magic\bootstrap\BootstrapInfo.class
+com\magic\bootstrap\PreMainBootstrap$1.class
+com\magic\bootstrap\PreMainBootstrap.class
+com\magic\bootstrap\Agent.class
+com\magic\bootstrap\AgentMainBootstrap.class
+com\magic\bootstrap\AgentMainBootstrap$1.class
+com\magic\bootstrap\ExampleLoader.class
