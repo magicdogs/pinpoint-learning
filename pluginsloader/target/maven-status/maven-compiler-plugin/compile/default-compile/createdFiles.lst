@@ -8,8 +8,10 @@ com\magic\transfrom\ClassTransfromer.class
 com\magic\util\TargetMethod.class
 com\magic\interceptor\InterceptorRegister.class
 com\magic\transfrom\TransfromTemplate.class
+com\magic\asm\ClassMethodVisiter.class
 com\magic\util\TargetConstructor.class
 com\magic\spi\Plugins.class
+com\magic\asm\ExampleClassVisitor.class
 com\magic\instrumentation\AsmInstrumention.class
 com\magic\instrumentation\AsmInstrumentClass.class
 com\magic\instrumentation\Instrumentor.class

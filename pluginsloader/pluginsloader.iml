@@ -12,5 +12,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="agentbootstrap" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-debug-all:5.1" level="project" />
   </component>
 </module>

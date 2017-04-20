@@ -11,4 +11,6 @@ C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magi
 C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\ClassTransfromer.java
 C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\transfrom\TransfromTemplate.java
 C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\AsmInstrumentClass.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\asm\ClassMethodVisiter.java
+C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\asm\ExampleClassVisitor.java
 C:\Users\magicdog\Desktop\pinpoint-learning\pluginsloader\src\main\java\com\magic\instrumentation\Instrumentor.java

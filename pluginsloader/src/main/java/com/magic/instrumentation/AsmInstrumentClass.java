@@ -1,24 +1,28 @@
 package com.magic.instrumentation;
 
+import com.magic.asm.ExampleClassVisitor;
 import com.magic.bootstrap.ExampleLoader;
 import com.magic.interceptor.AroundInterceptor;
 import com.magic.interceptor.InterceptorRegister;
 import com.magic.util.TargetConstructor;
 import com.magic.util.TargetMethod;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.util.CheckClassAdapter;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+import static org.objectweb.asm.ClassReader.EXPAND_FRAMES;
 
 /**
  * Created by magicdog on 2017/4/13.
  */
 public class AsmInstrumentClass implements InstrumentionClass{
-
-    private List<Field> fieldList = new LinkedList<Field>();
-
-    private List<Method> methodList = new LinkedList<Method>();
 
     private ExampleLoader pluginsClassLoader;
     private ClassLoader classLoader;
@@ -64,15 +68,36 @@ public class AsmInstrumentClass implements InstrumentionClass{
         }
     }
 
-    private void processTargetMethods(TargetMethod targetConstructor, int index) {
-        System.out.println(targetConstructor.name() + "," + index);
+    private void processTargetMethods(TargetMethod targetMethod, int index) {
+        System.out.println(targetMethod.name() + "," + index);
+        ClassReader cr = new ClassReader(byteBuf);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        ClassVisitor cv = new ExampleClassVisitor(Opcodes.ASM5,targetMethod.name(),index,cw);
+        CheckClassAdapter checkClassAdapter = new CheckClassAdapter(cv);
+        cr.accept(checkClassAdapter,EXPAND_FRAMES);
+        byteBuf = cw.toByteArray();
     }
 
     private void processTargetConstructor(TargetConstructor targetConstructor, int index) {
         System.out.println(targetConstructor.value()[0] + "," + index);
+        ClassReader cr = new ClassReader(byteBuf);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        ClassVisitor cv = new ExampleClassVisitor(Opcodes.ASM5,null,index,cw);
+        CheckClassAdapter checkClassAdapter = new CheckClassAdapter(cv);
+        cr.accept(checkClassAdapter,EXPAND_FRAMES);
+        byteBuf = cw.toByteArray();
     }
 
     public byte[] toByte() {
+        try {
+            System.out.println("tobyte");
+            OutputStream out = new FileOutputStream("d:/tmp/"+className);
+            out.write(byteBuf);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return byteBuf;
     }
 }

@@ -6,13 +6,12 @@
 > Pinpoint is an open source APM (Application Performance Management) tool for large-scale distributed systems written in Java. (一款开源的 应用性能管理工具  为大规模的分布式系统定制 )
 
 ==========================================================================
-#### 本文将从这 5 个方面理解 Pinpoint 的实现机制
+#### 本文将从这 4 个方面理解 Pinpoint 的实现机制
  
  1. JVMTI 、 JVMTIAgent  与 JAVAAGENT 机制
  2. Pinpoint ClassLoader
- 3. Pinpoint 's Plugins ServiceLoader
- 4. CLASS 字节码操作工具
- 5. TCP OR UDP
+ 3. CLASS 字节码操作工具
+ 4. TCP OR UDP
 
 -----
 
@@ -111,22 +110,125 @@ instrument agent
 --------
 
  **2. Pinpoint ClassLoader**
+ 
+ JVM ClassLoader 机制，双亲委托模型
+ 
+ AppClassLoader(3) -> ExtClassLoader(2) -> BootstrapClassLoader(1)
+ 
+ class 的查找顺序, 从右往左，优先级依次降低
+ 
+ Thread.currentThread (setClassLoader,getClassLoader) 作用 ?
+ 
+ 问题:
+        
+        classT,ClassLoaderA(classT的实例对象A),ClassLoaderB(classT的实例对象B) 
+        
+        都加载classT ，
+        
+        问 A.getClass().cast(B) Success or ClassCastException ,Why ?
+        
+
+Pinpoint ClassLoader 主要是使用了 4 大 ClassLoader
+
+
+通过javaagent: 注入启动的jar 到AppClassLoader
+
+通过instrucment 注入 boot目录 核心jar 到BootStrapClassLoader
+
+自定义的 LibraryClassLoader 加载第三方jar 与自身需要用到的库
+
+pluginClassLoader 加载所有外置的plugins 通过SPI实例化所有插件对象实例
 
 --------
 
- **3. Pinpoint 's Plugins ServiceLoader**
+ **3. CLASS 字节码操作工具**
+ 
+ JAVA 常用的字节码操作工具
+  Javassist , Asm , Apache bcel
 
+pinpoint 可以选择 javassist 或 Asm 框架作为其 字节码增强工具 
+
+字节码汇编
+(性能由左往右依次降低,可读性由左往右依次升高)
+01 二进制 -> 汇编语言 -> 高级语言
+
+汇编语言的操作一般格式是 : 操作码 + 操作数
+
+在java中，每一个方法的调用都带有方法的局部变量参数表，堆，栈 等信息。
+
+一个典型的java字节码汇编例子 
+
+
+    ; --- Copyright Jonathan Meyer 1996. All rights reserved. -----------------
+    ; File:      jasmin/examples/HelloWorld.j
+    ; Author:    Jonathan Meyer, 10 July 1996
+    ; Purpose:   Prints out "2" and "20"
+    ; -------------------------------------------------------------------------
+
+
+    .class public NoJad.j
+    .super java/lang/Object
+
+    ;
+    ; standard initializer
+    .method public <init>()V
+        aload_0
+        invokenonvirtual java/lang/Object/<init>()V
+        return
+    .end method
+
+    .method public static main([Ljava/lang/String;)V
+    .limit stack 3
+    .limit locals 1
+
+        getstatic      java/lang/System/out Ljava/io/PrintStream;
+        dup
+        bipush 2
+        invokevirtual  java/io/PrintStream/println(I)V
+  
+        bipush 20
+        invokevirtual  java/io/PrintStream/println(I)V
+   
+        return
+    .end method
+
+
+   从字节码层面解释 为什么 Integer i1 = new Integer(number); 不是原子性操作
+   
+    ANEWARRAY java/lang/Object
+    DUP
+    ICONST_0
+    ALOAD 1
+    AASTORE
+    DUP
+    ICONST_1
+    ILOAD 2
+    NEW java/lang/Integer
+    DUP_X1
+    SWAP
+    INVOKESPECIAL java/lang/Integer.<init> (I)V
+    AASTORE
+    DUP
+    ICONST_2
+    ILOAD 3
+    NEW java/lang/Integer
+    DUP_X1
+    SWAP
+    INVOKESPECIAL java/lang/Integer.<init> (I)V
+    AASTORE
+    
+   
 --------
 
- **4. CLASS 字节码操作工具**
-
-
---------
-
- **5. TCP OR UDP**
+ **4. TCP OR UDP**
+ 
+ Pinpoint 应用状态数据采用 tcp 协议与 collector 通讯, 程序plugin 探针采集的数据通过udp协议发送到 collector 端.
+ 
+ Pinpoint 网络通讯框架采用的是netty , 自定义编码与解码器
+ 
+ TCP 面向连接协议 3次握手，4次挥手
+ 
+ UDP 无连接 无状态
 
 ----------
 
-
-Documents
--------------
