@@ -10,6 +10,7 @@ com\magic\interceptor\InterceptorRegister.class
 com\magic\transfrom\TransfromTemplate.class
 com\magic\asm\ClassMethodVisiter.class
 com\magic\util\TargetConstructor.class
+com\magic\asm\AsmMainTest.class
 com\magic\spi\Plugins.class
 com\magic\asm\ExampleClassVisitor.class
 com\magic\instrumentation\AsmInstrumention.class

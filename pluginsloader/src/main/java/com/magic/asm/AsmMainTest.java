@@ -20,7 +20,7 @@ public class AsmMainTest {
         byte[] byteBuf = getTemplateByteCode();
         ClassReader cr = new ClassReader(byteBuf);
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-        ClassVisitor cv = new ExampleClassVisitor(Opcodes.ASM5,null,301,cw);
+        ClassVisitor cv = new ExampleClassVisitor(Opcodes.ASM5,"test",301,cw);
         CheckClassAdapter checkClassAdapter = new CheckClassAdapter(cv);
         cr.accept(checkClassAdapter,EXPAND_FRAMES);
 
@@ -28,7 +28,7 @@ public class AsmMainTest {
     }
 
     private static void writeFile(byte[] bytes) throws Exception{
-        File fout = new File("C:\\Users\\magicdog\\Desktop\\pinpoint-learning\\pluginsloader\\src\\main\\java\\com\\magic\\asm\\ccc.class");
+        File fout = new File("C:\\Users\\magicdog\\Desktop\\pinpoint-learning\\pluginsloader\\src\\main\\resources\\ccc.class");
         OutputStream out = new FileOutputStream(fout);
         out.write(bytes);
         out.flush();

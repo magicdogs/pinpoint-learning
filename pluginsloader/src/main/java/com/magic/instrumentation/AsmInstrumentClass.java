@@ -79,25 +79,25 @@ public class AsmInstrumentClass implements InstrumentionClass{
     }
 
     private void processTargetConstructor(TargetConstructor targetConstructor, int index) {
-        System.out.println(targetConstructor.value()[0] + "," + index);
+        /*System.out.println(targetConstructor.value()[0] + "," + index);
         ClassReader cr = new ClassReader(byteBuf);
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         ClassVisitor cv = new ExampleClassVisitor(Opcodes.ASM5,null,index,cw);
         CheckClassAdapter checkClassAdapter = new CheckClassAdapter(cv);
         cr.accept(checkClassAdapter,EXPAND_FRAMES);
-        byteBuf = cw.toByteArray();
+        byteBuf = cw.toByteArray();*/
     }
 
     public byte[] toByte() {
-        try {
-            System.out.println("tobyte");
-            OutputStream out = new FileOutputStream("d:/tmp/"+className);
+        /*try {
+            OutputStream out = new FileOutputStream("C:\\Users\\magicdog\\Desktop\\pinpoint-learning\\pluginsloader\\src\\main\\Example1.class");
             out.write(byteBuf);
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+        System.out.println("tobyte =======================================");
         return byteBuf;
     }
 }

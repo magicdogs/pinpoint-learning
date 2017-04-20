@@ -13,9 +13,10 @@ public class InterceptorRegister {
 
     public  static int addInterceptor(AroundInterceptor interceptor){
         synchronized(InterceptorRegister.class){
-            aroundInterceptorMap.put(index++,interceptor);
+            aroundInterceptorMap.put(index,interceptor);
+            index++;
         }
-        return index;
+        return index - 1;
     }
 
 

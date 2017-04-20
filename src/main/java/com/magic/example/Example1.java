@@ -21,18 +21,9 @@ public class Example1 {
     }
 
     public String test(String name,String m,int x){
-         try {
-                System.out.println("hi " + name);
-                System.out.println(m + x);
-                if(true){
-                    throw  new IllegalArgumentException("sss");
-                }
-                return "hello " + name;
-         }catch (Exception e){
-             System.out.println(e);
-                e.printStackTrace();
-                throw e;
-         }
+         System.out.println("hi " + name);
+         System.out.println(m + x);
+         return m + x;
     }
 
     public static void main(String[] args) throws Exception{

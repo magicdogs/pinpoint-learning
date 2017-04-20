@@ -15,28 +15,15 @@ import java.util.Map;
 public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
 
     private int argumentIndex ,
-                throwIndex,
                 resultIndex,
                 interceptorIndex;
 
     private int interceptorId;
-    /*
-    mv.visitVarInsn(ALOAD, 6);
-    mv.visitTypeInsn(CHECKCAST, "com/navercorp/pinpoint/bootstrap/interceptor/AroundInterceptor");
-    mv.visitVarInsn(ALOAD, 0);
-    mv.visitVarInsn(ALOAD, 9);
-    mv.visitMethodInsn(INVOKEINTERFACE, "com/navercorp/pinpoint/bootstrap/interceptor/AroundInterceptor", "before", "(Ljava/lang/Object;[Ljava/lang/Object;)V", true);
-    mv.visitVarInsn(ALOAD, 6);
-    mv.visitTypeInsn(CHECKCAST, "com/navercorp/pinpoint/bootstrap/interceptor/AroundInterceptor");
-    mv.visitVarInsn(ALOAD, 0);
-    mv.visitVarInsn(ALOAD, 9);
-    mv.visitVarInsn(ALOAD, 7);
-    mv.visitVarInsn(ALOAD, 8);
-    mv.visitMethodInsn(INVOKEINTERFACE, "com/navercorp/pinpoint/bootstrap/interceptor/AroundInterceptor", "after", "(Ljava/lang/Object;[Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Throwable;)V", true);
-    mv.visitInsn(ARETURN);*/
+
     private String INTERCEPTOR_AGENTNAME = "com/magic/interceptor/InterceptorRegister"; //getInterceptor
     private String INTERCEPTOR_BACKNAME = "(I)Lcom/magic/interceptor/AroundInterceptor;";
     private String INTERCEPTOR_TYPENAME = "Lcom/magic/interceptor/AroundInterceptor;";
+    private String INTERCEPTOR_TYPEOUTLINENAME = "com/magic/interceptor/AroundInterceptor";
     private String INTERCEPTOR_GETNAME = "getInterceptor";
     //方法的访问标志
     private int access;
@@ -94,7 +81,6 @@ public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
     public void visitMaxs(int maxStack, int maxLocals) {
         //设置局部变量表
         super.visitLocalVariable("_args",Type.getType(Object[].class).toString(),null,start,end,argumentIndex);
-        super.visitLocalVariable("_throw",Type.getType(Object.class).toString(),null,start,end,throwIndex);
         super.visitLocalVariable("_result",Type.getType(Object.class).toString(),null,start,end,resultIndex);
         super.visitLocalVariable("_interceptor",INTERCEPTOR_TYPENAME,null,start,end,interceptorIndex);
 
@@ -104,10 +90,8 @@ public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
         // exception handler starts here, with RuntimeException stored
         // on stack
         super.visitLabel(lCatchBlockStart);
-        // store the RuntimeException in local variable
-        super.visitVarInsn(ASTORE, throwIndex);
-        // here we could for example do e.printStackTrace()
-        super.visitVarInsn(ALOAD, throwIndex); // load it
+
+        addAfterInterceptor();
 
         super.visitInsn(ATHROW);
         // exception handler ends here:
@@ -122,7 +106,6 @@ public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
         //新增方法本地变量
         Type[] argumentTypes = Type.getArgumentTypes(desc);
         argumentIndex = newLocal(Type.getType(Object[].class));
-        throwIndex = newLocal(Type.getType(Throwable.class));
         resultIndex = newLocal(Type.getType(Object.class));
         interceptorIndex = newLocal(Type.getType(INTERCEPTOR_TYPENAME));
 
@@ -157,13 +140,17 @@ public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
 
         //设置空值
         super.visitInsn(ACONST_NULL);
-        super.visitVarInsn(ASTORE,throwIndex);
-        super.visitInsn(ACONST_NULL);
         super.visitVarInsn(ASTORE,resultIndex);
 
-        mv.visitIntInsn(SIPUSH, interceptorId);
-        mv.visitMethodInsn(INVOKESTATIC, INTERCEPTOR_AGENTNAME, INTERCEPTOR_GETNAME, INTERCEPTOR_BACKNAME, false);
+        super.visitIntInsn(SIPUSH, interceptorId);
+        super.visitMethodInsn(INVOKESTATIC, INTERCEPTOR_AGENTNAME, INTERCEPTOR_GETNAME, INTERCEPTOR_BACKNAME, false);
+        super.visitVarInsn(ASTORE,interceptorIndex);
 
+        super.visitVarInsn(ALOAD, interceptorIndex);
+        super.visitTypeInsn(CHECKCAST, INTERCEPTOR_TYPEOUTLINENAME);
+        super.visitVarInsn(ALOAD, 0);
+        super.visitVarInsn(ALOAD, argumentIndex);
+        super.visitMethodInsn(INVOKEINTERFACE, INTERCEPTOR_TYPEOUTLINENAME, "before", "(Ljava/lang/Object;[Ljava/lang/Object;)V", true);
 
         // set up try-catch block for RuntimeException
         visitTryCatchBlock(lTryBlockStart, lTryBlockEnd,
@@ -177,63 +164,22 @@ public class ClassMethodVisiter extends LocalVariablesSorter implements Opcodes{
     @Override
     public void visitInsn(int opcode) {
         if((opcode >= IRETURN && opcode <= RETURN) || opcode == ATHROW){
-            System.out.println("result");
-            //visitMethodInsn(INVOKESTATIC,"java/lang/System","currentTimeMillis","()J");
-            //super.visitInsn(LCONST_1);
-            //super.visitVarInsn(LSTORE,time);
-            //visitInsn(LSUB);
-            //visitFieldInsn(GETFIELD,owner,"timer","J");
-            //visitInsn(LADD);
-            //visitFieldInsn(PUTFIELD,owner,"timer","J");
+           if(opcode == ARETURN){
+               addAfterInterceptor();
+           }
         }
         super.visitInsn(opcode);
     }
 
+    private void addAfterInterceptor() {
 
-
-
-
-    /*@Override
-    public void visitMaxs(int maxStack, int maxLocals) {
-        super.visitMaxs(maxStack + 2, maxLocals);
-    }*/
-}
-
-
-/*
-super.visitTypeInsn(NEW, "java/lang/Integer");
-        super.visitInsn(DUP);
-        super.visitVarInsn(ILOAD, 3);
-        super.visitMethodInsn(INVOKESPECIAL, "java/lang/Integer", "<init>", "(I)V", false);
         super.visitVarInsn(ASTORE, resultIndex);
-
-        super.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        super.visitVarInsn(ALOAD, interceptorIndex);
+        super.visitTypeInsn(CHECKCAST, INTERCEPTOR_TYPEOUTLINENAME);
+        super.visitVarInsn(ALOAD, 0);
+        super.visitVarInsn(ALOAD, argumentIndex);
         super.visitVarInsn(ALOAD, resultIndex);
-        super.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
-
-
-
-
-
-
-
-
-
-
-
-
-visitMethodInsn(INVOKEVIRTUAL, "java/lang/Throwable",
-               "printStackTrace", "()V", false);
-        super.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        super.visitLdcInsn("eeeeeeeeeexxxxxxxxxxxxx");
-        super.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-
-        super.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        super.visitVarInsn(ALOAD, throwIndex); // load it
-        super.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
-        super.visitVarInsn(ALOAD, throwIndex); // load it
-
-
-
-
-*/
+        super.visitMethodInsn(INVOKEINTERFACE, INTERCEPTOR_TYPEOUTLINENAME, "after", "(Ljava/lang/Object;[Ljava/lang/Object;Ljava/lang/Object;)V", true);
+        super.visitVarInsn(ALOAD, resultIndex);
+    }
+}

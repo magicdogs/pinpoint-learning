@@ -10,10 +10,10 @@ import com.magic.util.TargetMethod;
 public class Example1MethodInterceptor implements AroundInterceptor{
 
     public void before(Object target, Object[] args) {
-
+        System.out.println("before test: ");
     }
 
     public void after(Object target, Object[] args, Object result) {
-
+        System.out.println("after test: " + result);
     }
 }

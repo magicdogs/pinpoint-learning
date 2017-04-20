@@ -57,7 +57,7 @@ public class PreMainBootstrap {
 
     private static void appendBootstrapClassLoader(JarFile[] jfs ,Instrumentation instrumentation) throws Exception{
         for (JarFile f: jfs) {
-            instrumentation.appendToBootstrapClassLoaderSearch(f);
+            instrumentation.appendToSystemClassLoaderSearch(f);
         }
     }
 

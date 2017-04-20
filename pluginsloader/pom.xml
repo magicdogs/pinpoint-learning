@@ -54,7 +54,7 @@
                         <configuration>
                             <tasks>
                                 <!--<mkdir dir="${target.dir}/${target.version}"/>-->
-                                <copy todir="../out/lib/" overwrite="true" >
+                                <copy todir="../out/boot/" overwrite="true" >
                                     <fileset dir="${project.build.directory}" erroronmissingdir="false">
                                         <include name="*.jar"/>
                                     </fileset>
