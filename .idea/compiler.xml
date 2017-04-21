@@ -30,7 +30,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="agentbootstrap" target="1.8" />
       <module name="pinpoint-demo" target="1.8" />
-      <module name="plugindemo" target="1.5" />
+      <module name="plugindemo" target="1.8" />
       <module name="pluginsloader" target="1.8" />
     </bytecodeTargetLevel>
   </component>
