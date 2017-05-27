@@ -220,7 +220,7 @@ pinpoint 可以选择 javassist 或 Asm 框架作为其 字节码增强工具
    
 --------
 
- **4. TCP OR UDP**
+ **4. TCP OR UDP** （本人时间有限，目前暂未涉及这块文档）
  
  Pinpoint 应用状态数据采用 tcp 协议与 collector 通讯, 程序plugin 探针采集的数据通过udp协议发送到 collector 端.
  
