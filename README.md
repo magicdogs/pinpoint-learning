@@ -6,6 +6,10 @@
 > Pinpoint is an open source APM (Application Performance Management) tool for large-scale distributed systems written in Java. (一款开源的 应用性能管理工具  为大规模的分布式系统定制 )
 
 ==========================================================================
+
+#### blog 地址： https://magicdogs.github.io/blog/2019-03/pinpoint%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
+
+
 #### 本文将从这 4 个方面理解 Pinpoint 的实现机制
  
  1. JVMTI 、 JVMTIAgent  与 JAVAAGENT 机制
